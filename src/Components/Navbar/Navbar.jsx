@@ -104,10 +104,9 @@ export default function Navbar() {
     // Items del Drawer con rutas e iconos
     const drawerItems = [
         { text: 'Productos', icon: <InventoryIcon />, path: '/' },
-        { text: 'Lotes', icon: <BatchIcon />, path: '/batch' },
         { text: 'Clientes', icon: <PeopleIcon />, path: '/Cliente' },
         { text: 'Proveedores', icon: <SupplierIcon />, path: '/suppliers' },
-        { text: 'Inventario', icon: <InventoryReportIcon />, path: '/inventory' },
+        { text: 'Inventario', icon: <InventoryReportIcon />, path: '/lote' },
         { text: 'Facturas', icon: <FactCheckIcon />, path: '/Factura' },
 
     ];
@@ -115,6 +114,7 @@ export default function Navbar() {
     const DrawerList = (
         <Box
             sx={{
+
                 width: 250,
                 bgcolor: 'rgb(23, 23, 26)',
                 height: '100%',
@@ -124,6 +124,7 @@ export default function Navbar() {
             onClick={toggleDrawer(false)}
         >
             <List>
+
                 {drawerItems.map((item) => (
                     <ListItem key={item.text} disablePadding>
                         <ListItemButton
@@ -140,6 +141,7 @@ export default function Navbar() {
                 ))}
             </List>
         </Box>
+
     );
 
     const menuId = 'primary-search-account-menu';
@@ -307,7 +309,9 @@ export default function Navbar() {
             </AppBar>
             {renderMobileMenu}
             {renderMenu}
-            <Drawer open={open} onClose={toggleDrawer(false)}>
+            <Drawer open={open} onClose={toggleDrawer(false)}
+                sx={{ height: '100%' }}
+            >
                 {DrawerList}
             </Drawer>
         </Box>

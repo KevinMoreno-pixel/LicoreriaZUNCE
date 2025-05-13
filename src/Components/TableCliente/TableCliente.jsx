@@ -1,18 +1,17 @@
-import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import LensIcon from '@mui/icons-material/Lens';
+import { IconButton } from '@mui/material';
+import { Link } from 'react-router-dom';
 
-const TableCliente = ({ clientes }) => {
+const TableCliente = ({ clientes, onEdit, onDelete }) => {
     const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
-        { field: 'nombre', headerName: 'Nombre', width: 170 },
-        { field: 'apellido', headerName: 'Apellido', width: 170 },
+        { field: 'nombre', headerName: 'Nombre', width: 300 },
         { field: 'telefono', headerName: 'Teléfonos', width: 200 },
         { field: 'factura', headerName: 'Factura', width: 70 },
         { field: 'total', headerName: 'Total', width: 170 },
         { field: 'metodo', headerName: 'Metodo de pago', width: 120 },
-
-
         {
             field: 'estado',
             headerName: 'Estado',
@@ -27,59 +26,77 @@ const TableCliente = ({ clientes }) => {
                     }}
                 />
             )
+        },
+        {
+            field: 'acciones',
+            headerName: 'Acciones',
+            width: 120,
+            sortable: false,
+            filterable: false,
+            renderCell: (params) => (
+                <>
+                    <IconButton
+                        onClick={() => onEdit(params.row)} color="primary">
+                        <EditIcon />
+                    </IconButton>
+                    <IconButton onClick={() => onDelete(params.row)} color="error">
+                        <DeleteIcon />
+                    </IconButton>
+                </>
+            )
         }
     ];
 
-    const rows = clientes.map((c) => ({
+    const rows = clientes.map((c, index) => ({
         id: c.id,
-        nombre: `${c.Nombre} ${c.Nombre2 ?? ''}`,
-        apellido: `${c.Apellido} ${c.Apellido2}`,
+        nombre: `${c.Nombre} ${c.Nombre2 ?? ''} ${c.Apellido} ${c.Apellido2}`,
         telefono: `${c.Cel1},  ${c.Cel2 ?? ''}`,
         factura: `${c.Factura ?? ''}`,
         total: `${new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(c.Total ?? 0)}`,
         metodo: `${c.MetodoDePago ?? ''}`,
         estado: c.Estado
+
     }));
 
     return (
-        <div style={{ height: 400, width: '100vh', justifyContent: 'center', height: '100%' }}>
+        <div style={{ height: 450, width: '100%' }}>
             <DataGrid
                 rows={rows}
                 columns={columns}
                 pageSize={5}
                 rowsPerPageOptions={[5, 10, 20]}
-                checkboxSelection
                 sx={{
                     color: 'white',
-                    backgroundColor: 'rgba(0, 0, 0, 0.87)',
+                    backgroundColor: '#121212',
                     border: '1px solid rgba(255, 255, 255, 0.14)',
                     borderRadius: 2,
                     boxShadow: 4,
 
-                    // Estilo para encabezado de columnas
+                    // Encabezado
                     '& .MuiDataGrid-columnHeaders': {
+                        backgroundColor: '#1f1f1f',
                         color: 'black',
                         fontWeight: 'bold',
                     },
 
-                    // Estilo para filas
+                    // Filas
                     '& .MuiDataGrid-row': {
                         '&:hover': {
                             backgroundColor: '#2a2a2a',
                         }
                     },
 
-                    // Selección de fila
+                    // Selección
                     '& .MuiDataGrid-row.Mui-selected': {
-                        backgroundColor: '#424242',
+                        backgroundColor: '#333',
                     },
 
-                    // Checkbox
-                    '& .MuiCheckbox-root': {
-                        color: 'white',
+                    // Acciones
+                    '& .MuiIconButton-root': {
+                        color: '#fff',
                     },
 
-                    // Scrollbar para dark mode
+                    // Scrollbar
                     '& .MuiDataGrid-virtualScroller::-webkit-scrollbar': {
                         width: '8px',
                         height: '8px',
@@ -93,7 +110,6 @@ const TableCliente = ({ clientes }) => {
                     },
                 }}
             />
-
         </div>
     );
 };

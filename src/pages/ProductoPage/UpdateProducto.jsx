@@ -13,6 +13,11 @@ const UpdateProducto = () => {
 
     const [producto, setProducto] = useState({
         Precio: "",
+        NombreProducto: "",
+        MarcaProducto: "",
+        Volumen: "",
+        PorcentajeAlcohol: "",
+
     });
 
     const navigate = useNavigate();
@@ -33,7 +38,11 @@ const UpdateProducto = () => {
             await actualizarImagen();
             setOpenSnackbar(true);
             setProducto({ //LIMPIAR FORMULARIO
-                Precio: ""
+                Precio: "",
+                NombreProducto: "",
+                MarcaProducto: "",
+                Volumen: "",
+                PorcentajeAlcohol: "",
             });
         } catch (err) {
             console.log(err)
@@ -120,6 +129,78 @@ const UpdateProducto = () => {
                     // onSubmit={handleSubmit}
                     sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, }}
                 >
+                    <TextField
+                        label="Nuevo nombre"
+                        name="NombreProducto"
+                        type="text"
+                        value={producto.NombreProducto}
+                        onChange={handleChange}
+                        fullWidth
+                        variant="filled"
+                        InputProps={{
+                            sx: {
+                                color: inputStyles.input.color,
+                                ...inputStyles.underline,
+                            },
+                        }}
+                        InputLabelProps={{
+                            sx: { color: inputStyles.label.color },
+                        }}
+                    />
+                    <TextField
+                        label="Nueva Marca"
+                        name="MarcaProducto"
+                        type="text"
+                        value={producto.MarcaProducto}
+                        onChange={handleChange}
+                        fullWidth
+                        variant="filled"
+                        InputProps={{
+                            sx: {
+                                color: inputStyles.input.color,
+                                ...inputStyles.underline,
+                            },
+                        }}
+                        InputLabelProps={{
+                            sx: { color: inputStyles.label.color },
+                        }}
+                    />
+                    <TextField
+                        label="Nuevo volumen"
+                        name="Volumen"
+                        type="text"
+                        value={producto.Volumen}
+                        onChange={handleChange}
+                        fullWidth
+                        variant="filled"
+                        InputProps={{
+                            sx: {
+                                color: inputStyles.input.color,
+                                ...inputStyles.underline,
+                            },
+                        }}
+                        InputLabelProps={{
+                            sx: { color: inputStyles.label.color },
+                        }}
+                    />
+                    <TextField
+                        label="Nuevo porcentaje"
+                        name="PorcentajeAlcohol"
+                        type="text"
+                        value={producto.PorcentajeAlcohol}
+                        onChange={handleChange}
+                        fullWidth
+                        variant="filled"
+                        InputProps={{
+                            sx: {
+                                color: inputStyles.input.color,
+                                ...inputStyles.underline,
+                            },
+                        }}
+                        InputLabelProps={{
+                            sx: { color: inputStyles.label.color },
+                        }}
+                    />
                     <TextField
 
                         label="Nuevo precio"

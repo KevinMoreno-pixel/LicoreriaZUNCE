@@ -15,7 +15,7 @@ const Footer = () => {
             <p>Florencia,Caquetà Colombia</p>
             <p>Barrio Porvenir Florencia caquetá</p>
             <p>Transversal 6 #14A 26</p>
-            <p className="highlight-text">Horario de atención: 8:00 AM - 5:00 PM</p>
+            <p className="highlight-text">Horario de atención: 6:00 PM - 6:00 AM</p>
             <p className="postal-code">Código Postal: 180001</p>
           </div>
         </div>
@@ -61,14 +61,7 @@ const Footer = () => {
 
       {/* Sección Legal */}
       <div className="footer-legal">
-        <div className="legal-links">
-          <a href="/politica-privacidad" className="legal-link">Política de privacidad</a>
-          <span className="divider">|</span>
-          <a href="/mapa-sitio" className="legal-link">Mapa del sitio</a>
-          <span className="divider">|</span>
-          <a href="/terminos" className="legal-link">Términos de uso</a>
-        </div>
-        <p className="copyright">&copy; {new Date().getFullYear()} UNGRD. Todos los derechos reservados</p>
+        <p className="copyright">&copy; {new Date().getFullYear()} KEVIN ANDRÉS MORENO PERÉZ. Todos los derechos reservados</p>
       </div>
     </footer>
   );

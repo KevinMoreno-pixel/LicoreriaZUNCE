@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Typography, Box, Button, Grid } from '@mui/material';
-import TableCliete from '../../Components/TableCliente/TableCliente'
-import { Link } from 'react-router-dom';
+import TableCliente from '../../Components/TableCliente/TableCliente'
+import { Link, Navigate } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
+import { useNavigate } from 'react-router-dom';
 
 const Cliente = () => {
     const [Clientes, setClientes] = useState([]);
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchAllClientes = async () => {
@@ -64,7 +65,16 @@ const Cliente = () => {
                 </Box>
 
                 <Grid sx={{ minHeight: '100vh' }}>
-                    <TableCliete clientes={Clientes} />
+                    <TableCliente
+                        clientes={Clientes}
+                        onEdit={(cliente) => {
+                            navigate(`/ActualizarCliente/${cliente.id}`)
+                        }}
+                        onDelete={(cliente) => {
+                            console.log('Eliminar cliente:', cliente);
+                            // Aquí podrías mostrar un dialogo de confirmación y luego eliminar
+                        }}
+                    />
                 </Grid>
 
             </Container>

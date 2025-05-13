@@ -66,7 +66,7 @@ const Producto = () => {
 
             <Grid container spacing={5} sx={{ justifyContent: 'center', minHeight: '100vh' }}>
                 {productos.map((producto) => (
-                    <Grid item key={producto.id}>
+                    <Grid key={producto.id}>
                         <CardProducto producto={producto} />
                     </Grid>
                 ))}
