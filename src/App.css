@@ -1,0 +1,14 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: url("FondoZunce.jpg") no-repeat center center fixed;
+    background-size: cover;
+    backdrop-filter: blur(50px);
+}
+
+.caja {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 3;
+}
