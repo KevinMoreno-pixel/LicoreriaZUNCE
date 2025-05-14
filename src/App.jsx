@@ -8,8 +8,10 @@ import Cliente from './pages/ClientePage/Cliente'
 import Footer from './Components/Footer/Footer'
 import AddCliente from './pages/ClientePage/AddCliente'
 import UpdateCliente from './pages/ClientePage/UpdateCliente'
-import { Backdrop, CircularProgress } from '@mui/material';
+import { Backdrop, CircularProgress } from '@mui/material'
 import { useState, useEffect } from 'react'
+import Lote from './pages/LotePage/Lote'
+import AddLote from './pages/LotePage/AddLote'
 import './App.css'
 
 const App = () => {
@@ -57,6 +59,8 @@ const App = () => {
                             <Route path="/Cliente" element={<Cliente />} />
                             <Route path="/AgregarCliente" element={<AddCliente />} />
                             <Route path="/ActualizarCliente/:id" element={<UpdateCliente />} />
+                            <Route path="/Lote" element={<Lote />} />
+                            <Route path="/AgregarLote" element={<AddLote />} />
 
                         </Routes>
                         <Footer />
