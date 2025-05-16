@@ -34,10 +34,10 @@ const Lote = () => {
                 }}
             >
                 <Typography variant="h4" gutterBottom sx={{ color: 'white' }}>
-                    Inventario
+                    INVENTARIO
                 </Typography>
 
-                <Box display="flex" justifyContent="flex-start" mb={2} width="65%" alignItems="center">
+                <Box display="flex" justifyContent="flex-start" mb={2} width="90%" alignItems="center">
                     <Typography variant='h6' sx={{ color: 'white', padding: '20px' }}>Agregar un lote: </Typography>
                     <Button
                         component={Link}
@@ -63,7 +63,7 @@ const Lote = () => {
                     </Button>
                 </Box>
 
-                <Grid sx={{ minHeight: '100vh', width: '100vh' }}>
+                <Grid sx={{ minHeight: '100vh', width: '100%' }}>
                     <TableLote
                         lotes={Lotes}
                         onEdit={(lote) => {

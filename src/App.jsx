@@ -12,6 +12,7 @@ import { Backdrop, CircularProgress } from '@mui/material'
 import { useState, useEffect } from 'react'
 import Lote from './pages/LotePage/Lote'
 import AddLote from './pages/LotePage/AddLote'
+import UpdateLote from './pages/LotePage/UpdateLote'
 import './App.css'
 
 const App = () => {
@@ -61,6 +62,8 @@ const App = () => {
                             <Route path="/ActualizarCliente/:id" element={<UpdateCliente />} />
                             <Route path="/Lote" element={<Lote />} />
                             <Route path="/AgregarLote" element={<AddLote />} />
+                            <Route path="/ActualizarLote/:id" element={<UpdateLote />} />
+
 
                         </Routes>
                         <Footer />

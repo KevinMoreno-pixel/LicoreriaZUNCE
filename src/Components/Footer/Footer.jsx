@@ -4,9 +4,13 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import Carousel from '../Carrousel/Carrousel';
 const Footer = () => {
   return (
     <footer className="modern-footer">
+      <div>
+        <Carousel />
+      </div>
       <div className="footer-container">
         {/* Sección Información */}
         <div className="footer-block">

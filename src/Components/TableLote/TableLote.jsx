@@ -65,7 +65,7 @@ const TableLote = ({ lotes, onEdit, onDelete }) => {
     }));
 
     return (
-        <div style={{ height: '100vh', width: '100vh' }}>
+        <div style={{ height: '100vh', width: '100%' }}>
             <DataGrid
                 rows={rows}
                 columns={columns}

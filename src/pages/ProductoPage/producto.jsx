@@ -23,6 +23,8 @@ const Producto = () => {
     }, []);
 
     return (
+
+
         <Container
             sx={{
                 mt: 5,
@@ -35,7 +37,7 @@ const Producto = () => {
             }}
         >
             <Typography variant="h4" gutterBottom sx={{ color: 'white' }}>
-                Productos 🛒
+                PRODUCTOS
             </Typography>
 
             <Box display="flex" justifyContent="flex-start" mb={2} width="100%" alignItems="center">

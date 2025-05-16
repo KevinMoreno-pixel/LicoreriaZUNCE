@@ -35,7 +35,7 @@ const Cliente = () => {
                 }}
             >
                 <Typography variant="h4" gutterBottom sx={{ color: 'white' }}>
-                    Clientes 👥
+                    CLIENTES
                 </Typography>
 
                 <Box display="flex" justifyContent="flex-start" mb={2} width="85%" alignItems="center">
@@ -64,7 +64,7 @@ const Cliente = () => {
                     </Button>
                 </Box>
 
-                <Grid sx={{ minHeight: '100vh' }}>
+                <Grid sx={{ minHeight: '100vh', width: '100%' }}>
                     <TableCliente
                         clientes={Clientes}
                         onEdit={(cliente) => {
