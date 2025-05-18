@@ -1,26 +1,28 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Typography, Box, Button, Grid } from '@mui/material';
-import TableLote from '../../Components/TableLote/TableLote'
 import { Link, Navigate } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { useNavigate } from 'react-router-dom';
+import TableProveedor from '../../Components/TableProveedor/TableProveedor';
 
-const Lote = () => {
-    const [Lotes, setLotes] = useState([]);
+const proveedor = () => {
+
+    const [proveedores, setProveedores] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchAllLotes = async () => {
+        const fetchAllProveedor = async () => {
             try {
-                const res = await axios.get('http://localhost:3000/infoLote');
-                setLotes(res.data);
+                const res = await axios.get('http://localhost:3000/infoproveedor');
+                setProveedores(res.data);
             } catch (err) {
                 console.log(err);
             }
         };
-        fetchAllLotes();
+        fetchAllProveedor();
     }, []);
+
     return (
         <>
             <Container
@@ -34,14 +36,37 @@ const Lote = () => {
                 }}
             >
                 <Typography variant="h4" gutterBottom sx={{ color: 'white' }}>
-                    INVENTARIO
+                    PROVEEDORES
                 </Typography>
 
-                <Box display="flex" justifyContent="flex-start" mb={2} width="90%" alignItems="center">
-                    <Typography variant='h6' sx={{ color: 'white', padding: '20px' }}>Agregar un lote: </Typography>
+                 <Box display="flex" justifyContent="space-between" mb={2} width="100%" alignItems="center">
+                    <Typography variant='h6' sx={{ color: 'white', padding: '20px' }}>Agregar un proveedor: </Typography>
                     <Button
                         component={Link}
-                        to="/app/AgregarLote"
+                        to="/app/AgregarProveedor"
+                        size="small"
+                        variant="outlined"
+                        sx={{
+                            color: 'white',
+                            borderColor: 'white',
+                            minWidth: '40px',
+                            minHeight: '40px',
+                            borderRadius: '50%',
+                            padding: 0,
+                            '&:hover': {
+                                color: 'gray',
+                                borderColor: 'transparent',
+                                boxShadow: '0 0 30px rgb(29, 118, 235)'
+
+                            }
+                        }}
+                    >
+                        <AddIcon />
+                    </Button>
+                    <Typography variant='h6' sx={{ color: 'white', padding: '20px' }}>Agregar un lote a proveedor: </Typography>
+                    <Button
+                        component={Link}
+                        to="/app/ProveedorLote"
                         size="small"
                         variant="outlined"
                         sx={{
@@ -64,13 +89,13 @@ const Lote = () => {
                 </Box>
 
                 <Grid sx={{ minHeight: '100vh', width: '100%' }}>
-                    <TableLote
-                        lotes={Lotes}
-                        onEdit={(lote) => {
-                            navigate(`/app/ActualizarLote/${lote.id}`)
+                    <TableProveedor
+                        proveedor={proveedores}
+                        onEdit={(proveedor) => {
+                            navigate(`/app/ActualizarProveedor/${proveedor.id}`)
                         }}
-                        onDelete={(lote) => {
-                            console.log('Eliminar cliente:', lote);
+                        onDelete={(proveedor) => {
+                            console.log('Eliminar proveedor:', proveedor);
                             // Aquí podrías mostrar un dialogo de confirmación y luego eliminar
                         }}
                     />
@@ -83,4 +108,4 @@ const Lote = () => {
     )
 }
 
-export default Lote
+export default proveedor

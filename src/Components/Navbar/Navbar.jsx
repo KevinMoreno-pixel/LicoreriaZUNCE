@@ -20,18 +20,18 @@ import {
 import {
     Menu as MenuIcon,
     Search as SearchIcon,
-    Mail as MailIcon,
-    Notifications as NotificationsIcon,
     AccountCircle,
-    More as MoreIcon,
     Inventory as InventoryIcon,
-    BatchPrediction as BatchIcon,
     People as PeopleIcon,
     LocalShipping as SupplierIcon,
     Assessment as InventoryReportIcon,
-    FactCheck as FactCheckIcon
+    FactCheck as FactCheckIcon,
+    LocalOffer as LocalOfferIcon
 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import { useAuth } from "../../Auth/AuthProvider";
+import { useNavigate } from "react-router-dom";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -73,12 +73,19 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
+    const { logout } = useAuth();
+    const goTo = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const [open, setOpen] = React.useState(false);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+    function handleLogout() {
+        logout();
+        goTo("/");
+    }
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -103,12 +110,12 @@ export default function Navbar() {
 
     // Items del Drawer con rutas e iconos
     const drawerItems = [
-        { text: 'Productos', icon: <InventoryIcon />, path: '/' },
-        { text: 'Clientes', icon: <PeopleIcon />, path: '/Cliente' },
-        { text: 'Proveedores', icon: <SupplierIcon />, path: '/suppliers' },
-        { text: 'Inventario', icon: <InventoryReportIcon />, path: '/lote' },
-        { text: 'Facturas', icon: <FactCheckIcon />, path: '/Factura' },
-
+        { text: 'Productos', icon: <InventoryIcon />, path: '/app/producto' },
+        { text: 'Clientes', icon: <PeopleIcon />, path: '/app/Cliente' },
+        { text: 'Proveedores', icon: <SupplierIcon />, path: '/app/Proveedor' },
+        { text: 'Inventario', icon: <InventoryReportIcon />, path: '/app/lote' },
+        { text: 'Facturas', icon: <FactCheckIcon />, path: '/app/Factura' },
+        { text: 'Ofertas', icon: <LocalOfferIcon />, path: '/app/Oferta' },
     ];
 
     const DrawerList = (
@@ -163,41 +170,11 @@ export default function Navbar() {
         >
             <MenuItem onClick={handleMenuClose} component={Link} to="/profile">Perfil</MenuItem>
             <MenuItem onClick={handleMenuClose} component={Link} to="/account">Mi cuenta</MenuItem>
-            <MenuItem onClick={handleMenuClose} component={Link} to="/logout">Cerrar sesión</MenuItem>
+            <MenuItem onClick={handleLogout}>Cerrar sesión</MenuItem>
         </Menu>
     );
 
     const mobileMenuId = 'primary-search-account-menu-mobile';
-    const renderMobileMenu = (
-        <Menu
-            anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            id={mobileMenuId}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={isMobileMenuOpen}
-            onClose={handleMobileMenuClose}
-        >
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                <p>Perfil</p>
-            </MenuItem>
-        </Menu>
-    );
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -217,7 +194,7 @@ export default function Navbar() {
                         variant="h6"
                         noWrap
                         component={Link}
-                        to="/"
+                        to="/app"
                         sx={{
                             display: { xs: 'none', sm: 'block' },
                             fontWeight: 'bold',
@@ -239,7 +216,9 @@ export default function Navbar() {
                         />
                     </Search>
                     <Box sx={{ flexGrow: 1 }} />
-
+                    <IconButton sx={{ color: 'white', mr: 1 }}>
+                        <ShoppingCartIcon />
+                    </IconButton>
                     <IconButton
                         size="large"
                         edge="end"
@@ -251,21 +230,8 @@ export default function Navbar() {
                     >
                         <AccountCircle />
                     </IconButton>
-                    <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-                        <IconButton
-                            size="large"
-                            aria-label="show more"
-                            aria-controls={mobileMenuId}
-                            aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
-                            color="inherit"
-                        >
-                            <MoreIcon />
-                        </IconButton>
-                    </Box>
                 </Toolbar>
             </AppBar>
-            {renderMobileMenu}
             {renderMenu}
             <Drawer open={open} onClose={toggleDrawer(false)}
                 sx={{ height: '100%' }}

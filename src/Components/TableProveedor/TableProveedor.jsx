@@ -5,21 +5,19 @@ import LensIcon from '@mui/icons-material/Lens';
 import { IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-const TableLote = ({ lotes, onEdit, onDelete }) => {
+const TableProveedor = ({ proveedor, onEdit, onDelete }) => {
     const columns = [
-        {field: 'id', headerName: 'id', width: 10},
-        { field: 'Lote', headerName: 'Lote', width: 230 },
-        { field: 'Producto', headerName: 'Producto', width: 200 },
-        { field: 'Marca', headerName: 'Marca', width: 150 },
-        { field: 'Precio', headerName: 'Precio', width: 110 },
-        { field: 'Porcentaje', headerName: 'Porcentaje Alcohol', width: 90 },
-        { field: 'Presentacion', headerName: 'Presentación', width: 70 },
-        { field: 'Cantidad', headerName: 'Stock', width: 70 },
-        { field: 'Caducidad', headerName: 'Caducidad', width: 90 },
+        { field: 'id', headerName: 'id', width: 10 },
+        { field: 'empresa', headerName: 'Empresa', width: 230 },
+        { field: 'direccion', headerName: 'Dirección', width: 250 },
+        { field: 'contacto', headerName: 'Contacto', width: 210 },
+        { field: 'nit', headerName: 'nit', width: 110 },
+        { field: 'tipo', headerName: 'Tipo', width: 160 },
+        { field: 'lotes', headerName: 'Lotes', width: 250},
         {
-            field: 'Estado',
+            field: 'estado',
             headerName: 'Estado',
-            width: 100,
+            width: 70,
             align: 'center',
             headerAlign: 'center',
             renderCell: (params) => (
@@ -34,7 +32,7 @@ const TableLote = ({ lotes, onEdit, onDelete }) => {
         {
             field: 'acciones',
             headerName: 'Acciones',
-            width: 120,
+            width: 100,
             sortable: false,
             filterable: false,
             renderCell: (params) => (
@@ -51,17 +49,16 @@ const TableLote = ({ lotes, onEdit, onDelete }) => {
         }
     ];
 
-    const rows = lotes.map((l, index) => ({
-        id: l.id,
-        Lote: `${l.Lote ?? ''}`,
-        Producto: `${l.Producto ?? ''}`,
-        Marca: `${l.Marca ?? ''}`,
-        Precio: `${new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(l.Precio ?? 0)}`,
-        Porcentaje: `${l.Porcentaje ?? ''}`,
-        Presentacion: `${l.Presentacion ?? ''}`,
-        Cantidad: `${l.Cantidad ?? ''}`,
-        Caducidad: `${new Date(l.Caducidad).toLocaleDateString()}`,
-        Estado: `${l.Estado ?? ''}`
+    const rows = proveedor.map((p, index) => ({
+        id: `${p.id}`,
+        empresa: `${p.empresa}`,
+        direccion: `${p.numero}, ${p.calle}, ${p.barrio ?? ''}`,
+        contacto: `${p.nombre} ${p.apellido}, ${p.celular}`,
+        nit: `${p.nit}`,
+        tipo: `${p.tipo}`,
+        lotes: `${p.Lotes ?? ''}`,
+        estado: `${p.estado}`
+
     }));
 
     return (
@@ -121,4 +118,4 @@ const TableLote = ({ lotes, onEdit, onDelete }) => {
 };
 
 
-export default TableLote;
+export default TableProveedor;

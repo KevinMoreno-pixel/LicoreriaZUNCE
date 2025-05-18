@@ -43,7 +43,7 @@ const UpdateLote = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const loteid = location.pathname.split("/")[2]
+  const loteid = location.pathname.split("/")[3]
 
   const handleChange = (e) => {
     setLote(prev => ({ ...prev, [e.target.name]: e.target.value }));

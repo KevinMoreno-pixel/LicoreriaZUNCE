@@ -3,61 +3,54 @@ import { Box, Button, Paper, TextField, Typography, Snackbar, Alert, InputAdornm
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const AddLote = () => {
+const AddProveedorLote = () => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [Producto, setProducto] = useState([]);
-    const [Presentacion, setPresentacion] = useState([]);
+    const [Proveedor, setProveedor] = useState([]);
+    const [Lote, setLote] = useState([]);
 
     useEffect(() => {
-        const fetchAllPre = async () => {
+        const fetchAllPro = async () => {
             try {
-                const res = await axios.get('http://localhost:3000/presentacion');
-                setPresentacion(res.data);
+                const res = await axios.get('http://localhost:3000/proveedor');
+                setProveedor(res.data);
             } catch (err) {
                 console.log(err);
             }
         };
-        fetchAllPre();
+        fetchAllPro();
     }, []);
 
     useEffect(() => {
-        const fetchAllProductos = async () => {
+        const fetchAlllotes = async () => {
             try {
-                const res = await axios.get('http://localhost:3000/producto');
-                setProducto(res.data);
+                const res = await axios.get('http://localhost:3000/lote');
+                setLote(res.data);
             } catch (err) {
                 console.log(err);
             }
         };
-        fetchAllProductos();
+        fetchAlllotes();
     }, []);
 
-    const [Lote, setLote] = useState({
-        NombreLote: "",
-        fkProducto: "",
-        fkPresentacion: "",
-        Caducidad: "",
-        Stock: "",
+    const [proveedorlote, setProveedorlote] = useState({
+        fkProveedor: "",
+        fkLote: "",
     });
 
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        setLote(prev => ({ ...prev, [e.target.name]: e.target.value }));
+        setProveedorlote(prev => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
     const handleClick = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:3000/lote", Lote);
+            await axios.post("http://localhost:3000/proveedorlote", proveedorlote);
             setOpenSnackbar(true);
-            navigate("/app/producto")
-            setLote({
-                NombreLote: "",
-                fkProducto: "",
-                fkPresentacion: "",
-                Caducidad: "",
-                Stock: "",
+            setProveedorlote({
+                fkProveedor: "",
+                fkLote: "",
             });
         } catch (err) {
             console.log(err);
@@ -91,7 +84,7 @@ const AddLote = () => {
                     boxShadow: 5,
                 }}>
                 <Typography variant="h5" textAlign="center" mb={2} color='white'>
-                    Agregar Lote
+                    Agregar lote a proveedor
                 </Typography>
 
                 <Box
@@ -99,38 +92,19 @@ const AddLote = () => {
                     onSubmit={handleClick}
                     sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}
                 >
-                    <TextField
-                        label="Nombre del lote"
-                        name="NombreLote"
-                        type="text"
-                        value={Lote.NombreLote}
-                        onChange={handleChange}
-                        required
-                        fullWidth
-                        variant="filled"
-                        InputProps={{
-                            sx: {
-                                color: inputStyles.input.color,
-                                ...inputStyles.underline,
-                            },
-                        }}
-                        InputLabelProps={{
-                            sx: { color: inputStyles.label.color },
-                        }}
-                    />
                     <Autocomplete
                         fullWidth
-                        options={Producto}
+                        options={Proveedor}
                         getOptionLabel={(option) => option.Nombre}
                         value={
-                            Producto.find(
-                                (tipo) => tipo.id === Lote.fkProducto
+                            Proveedor.find(
+                                (tipo) => tipo.id === proveedorlote.fkProveedor
                             ) || null
                         }
                         onChange={(event, newValue) => {
                             handleChange({
                                 target: {
-                                    name: 'fkProducto',
+                                    name: 'fkProveedor',
                                     value: newValue ? newValue.id : '',
                                 },
                             });
@@ -141,8 +115,8 @@ const AddLote = () => {
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                label="Producto"
-                                name="fkProducto"
+                                label="Provedor"
+                                name="fkProveedor"
                                 required
                                 fullWidth
                                 variant="filled"
@@ -161,29 +135,29 @@ const AddLote = () => {
                     />
                     <Autocomplete
                         fullWidth
-                        options={Presentacion}
-                        getOptionLabel={(option) => option.NombrePresentacion}
+                        options={Lote}
+                        getOptionLabel={(option) => option.nombre}
                         value={
-                            Presentacion.find(
-                                (pre) => pre.idpresentacion === Lote.fkPresentacion
+                            Lote.find(
+                                (pre) => pre.id === proveedorlote.fkLote
                             ) || null
                         }
                         onChange={(event, newValue) => {
                             handleChange({
                                 target: {
-                                    name: 'fkPresentacion',
-                                    value: newValue ? newValue.idpresentacion : '',
+                                    name: 'fkLote',
+                                    value: newValue ? newValue.id : '',
                                 },
                             });
                         }}
                         isOptionEqualToValue={(option, value) =>
-                            option.idpresentacion === value.idpresentacion
+                            option.id === value.id
                         }
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                label="Presentación"
-                                name="fkPresentacion"
+                                label="Lote"
+                                name="fkLote"
                                 required
                                 fullWidth
                                 variant="filled"
@@ -199,43 +173,6 @@ const AddLote = () => {
                                 }}
                             />
                         )}
-                    />
-                    <TextField
-                        label="Cantidad"
-                        name="Stock"
-                        type="number"
-                        value={Lote.Stock}
-                        onChange={handleChange}
-                        required
-                        fullWidth
-                        variant="filled"
-                        InputProps={{
-                            sx: {
-                                color: inputStyles.input.color,
-                                ...inputStyles.underline,
-                            },
-                        }}
-                        InputLabelProps={{
-                            sx: { color: inputStyles.label.color },
-                        }}
-                    />
-                    <TextField
-                        name="Caducidad"
-                        type="date"
-                        value={Lote.Caducidad}
-                        onChange={handleChange}
-                        required
-                        fullWidth
-                        variant="filled"
-                        InputProps={{
-                            sx: {
-                                color: inputStyles.input.color,
-                                ...inputStyles.underline,
-                            },
-                        }}
-                        InputLabelProps={{
-                            sx: { color: inputStyles.label.color },
-                        }}
                     />
                     <Button type="submit" variant="outlined" color="primary" fullWidth>
                         Agregar
@@ -258,7 +195,7 @@ const AddLote = () => {
                     anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                 >
                     <Alert onClose={() => setOpenSnackbar(false)} severity="success" sx={{ width: '100%' }}>
-                        Lote agregado correctamente
+                        Lote agregado a proveedor correctamente
                     </Alert>
                 </Snackbar>
             </Paper>
@@ -266,4 +203,4 @@ const AddLote = () => {
     );
 };
 
-export default AddLote;
+export default AddProveedorLote;

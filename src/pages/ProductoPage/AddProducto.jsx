@@ -63,7 +63,7 @@ const AddProducto = () => {
           "Content-Type": "multipart/form-data"
         }
       });
-      navigate("/AgregarLote");
+      navigate("/app/AgregarLote");
       setOpenSnackbar(true);
       setProducto({
         nombreproducto: "",

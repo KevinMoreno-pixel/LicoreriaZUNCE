@@ -42,7 +42,7 @@ const Cliente = () => {
                     <Typography variant='h6' sx={{ color: 'white', padding: '20px' }}>Agregar un Cliente: </Typography>
                     <Button
                         component={Link}
-                        to="/AgregarCliente"
+                        to="/app/AgregarCliente"
                         size="small"
                         variant="outlined"
                         sx={{
@@ -68,7 +68,7 @@ const Cliente = () => {
                     <TableCliente
                         clientes={Clientes}
                         onEdit={(cliente) => {
-                            navigate(`/ActualizarCliente/${cliente.id}`)
+                            navigate(`/app/ActualizarCliente/${cliente.id}`)
                         }}
                         onDelete={(cliente) => {
                             console.log('Eliminar cliente:', cliente);

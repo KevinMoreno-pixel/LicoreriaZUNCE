@@ -44,7 +44,7 @@ const Producto = () => {
                 <Typography variant='h6' sx={{ color: 'white', padding: '10px' }}>Agregar un producto: </Typography>
                 <Button
                     component={Link}
-                    to="/AgregarProducto"
+                    to="/app/AgregarProducto"
                     size="small"
                     variant="outlined"
                     sx={{

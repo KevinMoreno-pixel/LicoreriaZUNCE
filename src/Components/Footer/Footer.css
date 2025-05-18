@@ -19,7 +19,7 @@
 .footer-brand {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #006aff;
+    color: #fff700;
     margin-bottom: 1.5rem;
     letter-spacing: -0.5px;
 }
@@ -32,7 +32,7 @@
 }
 
 .highlight-text {
-    color: #006aff;
+    color: #fff700;
     font-weight: 500;
 }
 
@@ -46,7 +46,7 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 1.5rem;
-    color: #006aff;
+    color: #fff700;
     position: relative;
     padding-bottom: 0.5rem;
 }
@@ -58,7 +58,7 @@
     left: 0;
     width: 40px;
     height: 2px;
-    background: #000dff;
+    background: #fff700;
 }
 
 .social-container {
@@ -75,7 +75,7 @@
 }
 
 .social-icon:hover {
-    color: #0827b4;
+    color: #fff700;
     transform: translateY(-3px);
 }
 
@@ -104,7 +104,7 @@
 }
 
 .contact-link:hover {
-    color: #0827b4;
+    color: #fff700;
 }
 
 .footer-legal {
@@ -125,10 +125,6 @@
     text-decoration: none;
     font-size: 0.9rem;
     transition: color 0.2s ease;
-}
-
-.legal-link:hover {
-    color: #7ddf9c;
 }
 
 .divider {

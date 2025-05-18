@@ -1,18 +1,10 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Producto from './pages/ProductoPage/producto'
-import AddProducto from './pages/ProductoPage/AddProducto'
-import UpdateProducto from './pages/ProductoPage/UpdateProducto'
 import Navbar from './Components/Navbar/Navbar'
-import Cliente from './pages/ClientePage/Cliente'
 import Footer from './Components/Footer/Footer'
-import AddCliente from './pages/ClientePage/AddCliente'
-import UpdateCliente from './pages/ClientePage/UpdateCliente'
 import { Backdrop, CircularProgress } from '@mui/material'
 import { useState, useEffect } from 'react'
-import Lote from './pages/LotePage/Lote'
-import AddLote from './pages/LotePage/AddLote'
-import UpdateLote from './pages/LotePage/UpdateLote'
+import { Box } from '@mui/material';
+import { Outlet } from 'react-router-dom';
 import './App.css'
 
 const App = () => {
@@ -48,27 +40,30 @@ const App = () => {
             </Backdrop>
 
             {!loading && (
-                <div>
-                    <BrowserRouter>
+                <Box
+                    sx={{
+                        backgroundColor: 'rgb(0, 0, 5)',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                        Height: '100vh',
+                    }}
+                >
+                    {/* Contenedor general con blur */}
+                    <Box
+                        sx={{
+                            backgroundColor: 'rgba(2, 200, 255, 0.12)',
+                            backdropFilter: 'blur(10px)',
+                            minHeight: '100vh',
+                        }}
+                    >
                         <div className='caja'>
                             <Navbar />
                         </div>
-                        <Routes>
-                            <Route path="/" element={<Producto />} />
-                            <Route path="/AgregarProducto" element={<AddProducto />} />
-                            <Route path="/ActualizarProducto/:id" element={<UpdateProducto />} />
-                            <Route path="/Cliente" element={<Cliente />} />
-                            <Route path="/AgregarCliente" element={<AddCliente />} />
-                            <Route path="/ActualizarCliente/:id" element={<UpdateCliente />} />
-                            <Route path="/Lote" element={<Lote />} />
-                            <Route path="/AgregarLote" element={<AddLote />} />
-                            <Route path="/ActualizarLote/:id" element={<UpdateLote />} />
-
-
-                        </Routes>
+                        <Outlet />
                         <Footer />
-                    </BrowserRouter>
-                </div>
+                    </Box>
+                </Box>
             )}
 
         </>

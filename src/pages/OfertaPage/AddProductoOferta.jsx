@@ -3,27 +3,22 @@ import { Box, Button, Paper, TextField, Typography, Snackbar, Alert, InputAdornm
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const AddLote = () => {
+const AddProductoOferta = () => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [Producto, setProducto] = useState([]);
-    const [Presentacion, setPresentacion] = useState([]);
+    const [oferta, setOferta] = useState([]);
+    const [producto, setProducto] = useState([]);
+    const [ProductoOferta, setProductoOferta] = useState({
+        fkProducto: "",
+        fkOferta: "",
+        FechaFin: "",
+    });
 
-    useEffect(() => {
-        const fetchAllPre = async () => {
-            try {
-                const res = await axios.get('http://localhost:3000/presentacion');
-                setPresentacion(res.data);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-        fetchAllPre();
-    }, []);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchAllProductos = async () => {
             try {
-                const res = await axios.get('http://localhost:3000/producto');
+                const res = await axios.get('http://localhost:3000/productosinoferta');
                 setProducto(res.data);
             } catch (err) {
                 console.log(err);
@@ -32,32 +27,31 @@ const AddLote = () => {
         fetchAllProductos();
     }, []);
 
-    const [Lote, setLote] = useState({
-        NombreLote: "",
-        fkProducto: "",
-        fkPresentacion: "",
-        Caducidad: "",
-        Stock: "",
-    });
-
-    const navigate = useNavigate();
+    useEffect(() => {
+        const fetchAllOfertas = async () => {
+            try {
+                const res = await axios.get('http://localhost:3000/ofertasActivas');
+                setOferta(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchAllOfertas();
+    }, []);
 
     const handleChange = (e) => {
-        setLote(prev => ({ ...prev, [e.target.name]: e.target.value }));
+        setProductoOferta(prev => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
     const handleClick = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:3000/lote", Lote);
+            await axios.post("http://localhost:3000/productoOferta", ProductoOferta);
             setOpenSnackbar(true);
-            navigate("/app/producto")
-            setLote({
-                NombreLote: "",
+            setProductoOferta({
                 fkProducto: "",
-                fkPresentacion: "",
-                Caducidad: "",
-                Stock: "",
+                fkOferta: "",
+                FechaFin: "",
             });
         } catch (err) {
             console.log(err);
@@ -91,7 +85,7 @@ const AddLote = () => {
                     boxShadow: 5,
                 }}>
                 <Typography variant="h5" textAlign="center" mb={2} color='white'>
-                    Agregar Lote
+                    Agregar oferta a un producto
                 </Typography>
 
                 <Box
@@ -99,32 +93,13 @@ const AddLote = () => {
                     onSubmit={handleClick}
                     sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}
                 >
-                    <TextField
-                        label="Nombre del lote"
-                        name="NombreLote"
-                        type="text"
-                        value={Lote.NombreLote}
-                        onChange={handleChange}
-                        required
-                        fullWidth
-                        variant="filled"
-                        InputProps={{
-                            sx: {
-                                color: inputStyles.input.color,
-                                ...inputStyles.underline,
-                            },
-                        }}
-                        InputLabelProps={{
-                            sx: { color: inputStyles.label.color },
-                        }}
-                    />
                     <Autocomplete
                         fullWidth
-                        options={Producto}
-                        getOptionLabel={(option) => option.Nombre}
+                        options={producto}
+                        getOptionLabel={(option) => option.nombre}
                         value={
-                            Producto.find(
-                                (tipo) => tipo.id === Lote.fkProducto
+                            producto.find(
+                                (tipo) => tipo.id === ProductoOferta.fkProducto
                             ) || null
                         }
                         onChange={(event, newValue) => {
@@ -161,29 +136,29 @@ const AddLote = () => {
                     />
                     <Autocomplete
                         fullWidth
-                        options={Presentacion}
-                        getOptionLabel={(option) => option.NombrePresentacion}
+                        options={oferta}
+                        getOptionLabel={(option) => option.valor * 100 + '%'}
                         value={
-                            Presentacion.find(
-                                (pre) => pre.idpresentacion === Lote.fkPresentacion
+                            oferta.find(
+                                (tipo) => tipo.id === ProductoOferta.fkOferta
                             ) || null
                         }
                         onChange={(event, newValue) => {
                             handleChange({
                                 target: {
-                                    name: 'fkPresentacion',
-                                    value: newValue ? newValue.idpresentacion : '',
+                                    name: 'fkOferta',
+                                    value: newValue ? newValue.id : '',
                                 },
                             });
                         }}
                         isOptionEqualToValue={(option, value) =>
-                            option.idpresentacion === value.idpresentacion
+                            option.id === value.id
                         }
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                label="Presentación"
-                                name="fkPresentacion"
+                                label="Oferta"
+                                name="fkOferta"
                                 required
                                 fullWidth
                                 variant="filled"
@@ -200,29 +175,13 @@ const AddLote = () => {
                             />
                         )}
                     />
+                    <Typography variant="subtitle1" textAlign="center" mb={2} color='white'>
+                        Fecha fin:
+                    </Typography>
                     <TextField
-                        label="Cantidad"
-                        name="Stock"
-                        type="number"
-                        value={Lote.Stock}
-                        onChange={handleChange}
-                        required
-                        fullWidth
-                        variant="filled"
-                        InputProps={{
-                            sx: {
-                                color: inputStyles.input.color,
-                                ...inputStyles.underline,
-                            },
-                        }}
-                        InputLabelProps={{
-                            sx: { color: inputStyles.label.color },
-                        }}
-                    />
-                    <TextField
-                        name="Caducidad"
+                        name="FechaFin"
                         type="date"
-                        value={Lote.Caducidad}
+                        value={ProductoOferta.FechaFin}
                         onChange={handleChange}
                         required
                         fullWidth
@@ -258,7 +217,7 @@ const AddLote = () => {
                     anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                 >
                     <Alert onClose={() => setOpenSnackbar(false)} severity="success" sx={{ width: '100%' }}>
-                        Lote agregado correctamente
+                        Oferta agregada correctamente
                     </Alert>
                 </Snackbar>
             </Paper>
@@ -266,4 +225,4 @@ const AddLote = () => {
     );
 };
 
-export default AddLote;
+export default AddProductoOferta;

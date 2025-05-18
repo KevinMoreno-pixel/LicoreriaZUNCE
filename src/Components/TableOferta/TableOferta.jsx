@@ -5,21 +5,37 @@ import LensIcon from '@mui/icons-material/Lens';
 import { IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-const TableLote = ({ lotes, onEdit, onDelete }) => {
+const TableOferta = ({ ofertas, onEdit, onDelete }) => {
     const columns = [
-        {field: 'id', headerName: 'id', width: 10},
-        { field: 'Lote', headerName: 'Lote', width: 230 },
-        { field: 'Producto', headerName: 'Producto', width: 200 },
-        { field: 'Marca', headerName: 'Marca', width: 150 },
-        { field: 'Precio', headerName: 'Precio', width: 110 },
-        { field: 'Porcentaje', headerName: 'Porcentaje Alcohol', width: 90 },
-        { field: 'Presentacion', headerName: 'Presentación', width: 70 },
-        { field: 'Cantidad', headerName: 'Stock', width: 70 },
-        { field: 'Caducidad', headerName: 'Caducidad', width: 90 },
+        { field: 'id', headerName: 'id', width: 90 },
+        { field: 'producto', headerName: 'Producto', width: 230 },
+        { field: 'descuento', headerName: 'Descuento', width: 90 },
         {
-            field: 'Estado',
+            field: 'precioviejo',
+            headerName: 'Precio anterior',
+            width: 120,
+            renderCell: (params) => (
+                <span style={{ color: 'red' }}>
+                    {params.value}
+                </span>
+            ),
+        },
+        {
+            field: 'precionuevo',
+            headerName: 'Precio nuevo',
+            width: 120,
+            renderCell: (params) => (
+                <span style={{ color: 'greenyellow' }}>
+                    {params.value}
+                </span>
+            ),
+        },
+        { field: 'inicio', headerName: 'Fecha inicio', width: 120 },
+        { field: 'fin', headerName: 'Fecha fin', width: 120 },
+        {
+            field: 'estado',
             headerName: 'Estado',
-            width: 100,
+            width: 130,
             align: 'center',
             headerAlign: 'center',
             renderCell: (params) => (
@@ -51,17 +67,15 @@ const TableLote = ({ lotes, onEdit, onDelete }) => {
         }
     ];
 
-    const rows = lotes.map((l, index) => ({
-        id: l.id,
-        Lote: `${l.Lote ?? ''}`,
-        Producto: `${l.Producto ?? ''}`,
-        Marca: `${l.Marca ?? ''}`,
-        Precio: `${new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(l.Precio ?? 0)}`,
-        Porcentaje: `${l.Porcentaje ?? ''}`,
-        Presentacion: `${l.Presentacion ?? ''}`,
-        Cantidad: `${l.Cantidad ?? ''}`,
-        Caducidad: `${new Date(l.Caducidad).toLocaleDateString()}`,
-        Estado: `${l.Estado ?? ''}`
+    const rows = ofertas.map((o, index) => ({
+        id: `${o.idproducto}-${o.idoferta}`,
+        producto: `${o.producto ?? ''}`,
+        descuento: `${o.descuento * 100 ?? ''} %`,
+        precioviejo: `${new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(o.precioviejo)}`,
+        precionuevo: `${new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(o.precionuevo)}`,
+        inicio: `${new Date(o.inicio).toLocaleDateString()}`,
+        fin: `${new Date(o.fin).toLocaleDateString()}`,
+        estado: `${o.estado ?? ''}`
     }));
 
     return (
@@ -121,4 +135,4 @@ const TableLote = ({ lotes, onEdit, onDelete }) => {
 };
 
 
-export default TableLote;
+export default TableOferta;

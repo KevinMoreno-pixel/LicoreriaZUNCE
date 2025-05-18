@@ -22,3 +22,4 @@ Aplicación web para la gestión y visualización de productos, lotes, proveedor
 ### Bases de datos:
 -MongoDB para el registro de los usuarios, tokens y imagenes de los productos
 -MySQL para la logica de los registros
+

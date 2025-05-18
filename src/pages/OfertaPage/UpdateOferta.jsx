@@ -2,39 +2,36 @@ import { useState, useEffect } from "react";
 import { Box, Button, Paper, TextField, Typography, Snackbar, Alert, InputAdornment, Autocomplete } from "@mui/material";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 
-const UpdateCliente = () => {
+const UpdateOferta = () => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [cliente, setCliente] = useState({
-        Nombre1: "",
-        Nombre2: "",
-        Apellido: "",
-        Apellido2: "",
-        celC1: "",
-        celC2: "",
+    const [oferta, setOferta] = useState({
+        ValorOferta: "",
+        FechaOferta: "",
+        HoraOferta: "",
+        EstadoOferta: ""
     });
 
     const navigate = useNavigate();
     const location = useLocation();
 
-    const clienteid = location.pathname.split("/")[3]
+    const ofertaid = location.pathname.split("/")[3]
 
     const handleChange = (e) => {
-        setCliente(prev => ({ ...prev, [e.target.name]: e.target.value }));
+        setOferta(prev => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
     const handleClick = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`http://localhost:3000/cliente/${clienteid}`, cliente);
+            await axios.put(`http://localhost:3000/oferta/${ofertaid}`, oferta);
             setOpenSnackbar(true);
-            setCliente({
-                Nombre1: "",
-                Nombre2: "",
-                Apellido: "",
-                Apellido2: "",
-                celC1: "",
-                celC2: "",
+            setOferta({
+                ValorOferta: "",
+                FechaOferta: "",
+                HoraOferta: "",
+                EstadoOferta: ""
             });
         } catch (err) {
             console.log(err);
@@ -68,7 +65,7 @@ const UpdateCliente = () => {
                     boxShadow: 5,
                 }}>
                 <Typography variant="h5" textAlign="center" mb={2} color='white'>
-                    Actualizar cliente
+                    Actualizar oferta
                 </Typography>
 
                 <Box
@@ -77,10 +74,10 @@ const UpdateCliente = () => {
                     sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}
                 >
                     <TextField
-                        label="Nuevo primer Nombre"
-                        name="Nombre1"
-                        type="text"
-                        value={cliente.Nombre1}
+                        label="Porcentaje de la oferta"
+                        name="ValorOferta"
+                        type="number"
+                        value={oferta.ValorOferta}
                         onChange={handleChange}
                         fullWidth
                         variant="filled"
@@ -95,10 +92,9 @@ const UpdateCliente = () => {
                         }}
                     />
                     <TextField
-                        label="nuevo segundo Nombre"
-                        name="Nombre2"
-                        type="text"
-                        value={cliente.Nombre2}
+                        name="FechaOferta"
+                        type="date"
+                        value={oferta.FechaOferta}
                         onChange={handleChange}
                         fullWidth
                         variant="filled"
@@ -113,10 +109,9 @@ const UpdateCliente = () => {
                         }}
                     />
                     <TextField
-                        label="nuevo Primer Apellido"
-                        name="Apellido"
-                        type="text"
-                        value={cliente.Apellido}
+                        name="HoraOferta"
+                        type="time"
+                        value={oferta.HoraOferta}
                         onChange={handleChange}
                         fullWidth
                         variant="filled"
@@ -130,60 +125,34 @@ const UpdateCliente = () => {
                             sx: { color: inputStyles.label.color },
                         }}
                     />
-                    <TextField
-                        label="nuevo Segundo Apellido"
-                        name="Apellido2"
-                        type="text"
-                        value={cliente.Apellido2}
-                        onChange={handleChange}
-                        fullWidth
-                        variant="filled"
-                        InputProps={{
-                            sx: {
-                                color: inputStyles.input.color,
-                                ...inputStyles.underline,
-                            },
-                        }}
-                        InputLabelProps={{
-                            sx: { color: inputStyles.label.color },
-                        }}
-                    />
-                    <TextField
-                        label="nuevo Numero Celular"
-                        name="celC1"
-                        type="text"
-                        value={cliente.celC1}
-                        onChange={handleChange}
-                        fullWidth
-                        variant="filled"
-                        InputProps={{
-                            sx: {
-                                color: inputStyles.input.color,
-                                ...inputStyles.underline,
-                            },
-                        }}
-                        InputLabelProps={{
-                            sx: { color: inputStyles.label.color },
-                        }}
-                    />
-                    <TextField
-                        label="nuevo Teléfono"
-                        name="celC2"
-                        type="text"
-                        value={cliente.celC2}
-                        onChange={handleChange}
-                        fullWidth
-                        variant="filled"
-                        InputProps={{
-                            sx: {
-                                color: inputStyles.input.color,
-                                ...inputStyles.underline,
-                            },
-                        }}
-                        InputLabelProps={{
-                            sx: { color: inputStyles.label.color },
-                        }}
-                    />
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+                        <FormControl>
+                            <FormLabel sx={{ color: inputStyles.label.color, textAlign: 'center' }}>
+                                Estado de la oferta
+                            </FormLabel>
+                            <RadioGroup
+                                row
+                                name="EstadoOferta"
+                                value={oferta.EstadoOferta}
+                                onChange={handleChange}
+                                sx={{ justifyContent: 'center' }}
+                            >
+                                <FormControlLabel
+                                    value="A"
+                                    control={<Radio sx={{ color: inputStyles.input.color }} />}
+                                    label="Activo"
+                                    sx={{ color: inputStyles.input.color }}
+                                />
+                                <FormControlLabel
+                                    value="I"
+                                    control={<Radio sx={{ color: inputStyles.input.color }} />}
+                                    label="Inactivo"
+                                    sx={{ color: inputStyles.input.color }}
+                                />
+                            </RadioGroup>
+                        </FormControl>
+                    </Box>
+
                     <Button type="submit" variant="outlined" color="primary" fullWidth>
                         Actualizar
                     </Button>
@@ -205,7 +174,7 @@ const UpdateCliente = () => {
                     anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                 >
                     <Alert onClose={() => setOpenSnackbar(false)} severity="success" sx={{ width: '100%' }}>
-                        Cliente Actualizado correctamente
+                        Oferta actualizada correctamente
                     </Alert>
                 </Snackbar>
             </Paper>
@@ -213,4 +182,4 @@ const UpdateCliente = () => {
     );
 };
 
-export default UpdateCliente
+export default UpdateOferta;

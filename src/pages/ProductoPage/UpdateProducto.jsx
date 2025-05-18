@@ -23,7 +23,7 @@ const UpdateProducto = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const productoid = location.pathname.split("/")[2]
+    const productoid = location.pathname.split("/")[3]
 
 
     const handleChange = (e) => {

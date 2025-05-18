@@ -21,8 +21,8 @@ const CardProducto = ({ producto }) => {
         <Card
             sx={{
                 width: 350,
-                height: 500,
-                backgroundColor: 'transparent',
+                height: 450,
+                backgroundColor: 'rgba(0, 0, 0, 0.91)',
                 color: 'white',
                 border: '1px solid static',
                 borderRadius: '10px',
@@ -31,7 +31,7 @@ const CardProducto = ({ producto }) => {
                 transition: 'all 0.6s ease-in-out',
                 '&:hover': {
                     scale: 1.05,
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    backgroundColor: 'rgba(17, 1, 1, 0.51)',
                 },
             }}
         >
@@ -83,10 +83,9 @@ const CardProducto = ({ producto }) => {
                 <Typography variant="body1">
                     {producto.Porcentajeal}
                 </Typography>
-                <Typography variant="h5" sx={{ display: 'flex', justifyContent: 'end' }}>
+                <Typography variant="h5" sx={{ textShadow: '0 0 20px', color: 'yellow', display: 'flex', justifyContent: 'end' }}>
                     {new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(producto.Precio)}
                 </Typography>
-
                 <Box display="flex" alignItems="center" justifyContent="space-between">
                     {producto.descuento != null && (
                         <Box
@@ -110,52 +109,7 @@ const CardProducto = ({ producto }) => {
                             : ''}
                     </Typography>
                 </Box>
-                <Typography variant="body1" sx={{ display: 'flex', justifyContent: 'end', gap: 0.5 }}>
-                    <LensIcon
-                        color={producto.Estado === 'A' ? 'success' : producto.Estado === 'I' ? 'error' : 'inherit'}
-                        fontSize='small' />
-                </Typography>
             </CardContent>
-
-            <CardActions
-                sx={{
-                    justifyContent: 'flex-end',
-                }}
-            >
-
-                <Button
-                    component={Link}
-                    to={`/app/ActualizarProducto/${producto.id}`}
-                    size="small"
-                    sx={{
-                        minWidth: '40px',
-                        minHeight: '40px',
-                        borderRadius: '50%',
-                        color: 'white',
-                        borderColor: 'white',
-                        '&:hover': {
-                            color: 'Gray'
-                        }
-                    }}
-                >
-                    <SettingsIcon fontSize='small' />
-                </Button>
-                <Button
-                    size="small"
-                    sx={{
-                        minWidth: '40px',
-                        minHeight: '40px',
-                        borderRadius: '50%',
-                        color: 'white',
-                        borderColor: 'white',
-                        '&:hover': {
-                            color: 'Gray'
-                        }
-                    }}
-                >
-                    <DeleteIcon fontSize='small' />
-                </Button>
-            </CardActions>
         </Card >
     );
 };
